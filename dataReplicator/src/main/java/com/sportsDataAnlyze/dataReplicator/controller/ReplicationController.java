@@ -17,6 +17,7 @@ public class ReplicationController {
     public String forceReplication(){
         for(LeagueUrlEnum league : LeagueUrlEnum.values()){
             replicationTaskService.createDataCSV(league);
+            replicationTaskService.copyRawDataToDatabase(league);
         }
         return "data downloaded succesfully";
     }

@@ -1,7 +1,8 @@
-package com.sportsDataAnlyze.dataReplicator.service.task;
+package com.sportsDataAnlyze.dataReplicator.service.task.rep;
 
 import com.sportsDataAnlyze.dataReplicator.dao.RefereeDao;
 import com.sportsDataAnlyze.dataReplicator.entity.Referee;
+import com.sportsDataAnlyze.dataReplicator.service.task.rep.AbstractTask;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -11,7 +12,7 @@ import java.util.Map;
 import java.util.Set;
 
 @Component
-public class RefereeTask extends AbstractTask<Referee,Long,RefereeDao> {
+public class RefereeTask extends AbstractTask<Referee,String,RefereeDao> {
 
     private ArrayList<Referee> refereesInput = new ArrayList<>();
     private Set<String > refs = new HashSet<>();
@@ -20,19 +21,9 @@ public class RefereeTask extends AbstractTask<Referee,Long,RefereeDao> {
         super(new String[]{"Referee","HY","AY"});
     }
 
-    public void generateRefResult() throws IOException {
-        readRepData();
-        convertInput();
-    }
-
     @Override
-    protected void generateRowContent(Map<String, Integer> headersPosition, String[] nextRecord) {
+    protected void mapObject(Map<String, Integer> headersPosition, String[] nextRecord) {
         Referee ref = new Referee();
-        mapObject(ref,headersPosition,nextRecord);
-    }
-
-    @Override
-    protected void mapObject(Referee ref, Map<String, Integer> headersPosition, String[] nextRecord) {
         for (Map.Entry<String, Integer> entry : headersPosition.entrySet()) {
             switch(entry.getKey()){
                 case "Referee":
@@ -63,6 +54,16 @@ public class RefereeTask extends AbstractTask<Referee,Long,RefereeDao> {
             ref.setRefName(name.replace(" ","."));
             ref.setAvgCards(Double.valueOf(ref.getCards())/Double.valueOf(ref.getMatches()));
             dao.save(ref);
+        }
+    }
+
+    @Override
+    public void generateResult() {
+        try {
+            readRepData();
+            convertInput();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }

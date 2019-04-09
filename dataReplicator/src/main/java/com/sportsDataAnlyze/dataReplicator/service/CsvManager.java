@@ -10,17 +10,20 @@ import java.net.URL;
 
 @Component
 public class CsvManager {
-    public void createDownloadDataCSV(LeagueUrlEnum leagueUrlEnum){
-        File directory = new File("data");
-        String toFile = "data/" + leagueUrlEnum.name().toLowerCase() + ".csv";
-        File file = new File(toFile);
-        directory.mkdir();
-        try {
-            FileUtils.deleteQuietly(file);
-            file.createNewFile();
-            FileUtils.copyURLToFile(new URL(leagueUrlEnum.getLink().toLowerCase()), new File(toFile), 10000, 10000);
-        } catch (IOException e) {
-            e.printStackTrace();
+    public void createDownloadDataCSV() {
+        for (LeagueUrlEnum league : LeagueUrlEnum.values()) {
+            File directory = new File("data");
+            String toFile = "data/" + league.name().toLowerCase() + ".csv";
+            File file = new File(toFile);
+            directory.mkdir();
+            try {
+                FileUtils.deleteQuietly(file);
+                file.createNewFile();
+                FileUtils.copyURLToFile(new URL(league.getLink().toLowerCase()), new File(toFile), 10000, 10000);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 }
+

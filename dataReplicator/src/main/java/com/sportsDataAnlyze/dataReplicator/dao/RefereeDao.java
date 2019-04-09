@@ -6,8 +6,7 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface RefereeDao extends PagingAndSortingRepository<Referee,Long> {
+public interface RefereeDao extends PagingAndSortingRepository<Referee,String> {
 
-      @Query(value="SELECT r FROM Referee r WHERE r.refName = ?1")
-      Referee findRefByName(String refName);
+      Referee findByRefName(String refname);
 }

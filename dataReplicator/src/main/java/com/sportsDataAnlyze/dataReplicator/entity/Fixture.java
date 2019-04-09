@@ -11,11 +11,13 @@ public class Fixture {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name="home")
-    private String home;
+    @ManyToOne(cascade = CascadeType.ALL,targetEntity = Team.class)
+    @JoinColumn(name="home")
+    private Team home;
 
-    @Column(name="away")
-    private String away;
+    @ManyToOne(cascade = CascadeType.ALL,targetEntity = Team.class)
+    @JoinColumn(name="away")
+    private Team away;
 
     @Column(name="league")
     private String league;
@@ -42,19 +44,19 @@ public class Fixture {
     private Integer awayCorners;
 
     @ManyToOne(cascade = CascadeType.ALL,targetEntity = Referee.class)
-    @JoinColumn(name="referee_id")
-    private Referee refereeId;
+    @JoinColumn(name="ref_name")
+    private Referee refName;
 
     @Column(name="result")
     private String result;
 
 
-    public Referee getRefereeId() {
-        return refereeId;
+    public Referee getRefName() {
+        return refName;
     }
 
-    public void setRefereeId(Referee refereeId) {
-        this.refereeId = refereeId;
+    public void setRefName(Referee refName) {
+        this.refName = refName;
     }
 
     public String getResult() {
@@ -73,19 +75,19 @@ public class Fixture {
         this.id = id;
     }
 
-    public String getHome() {
+    public Team getHome() {
         return home;
     }
 
-    public void setHome(String home) {
+    public void setHome(Team home) {
         this.home = home;
     }
 
-    public String getAway() {
+    public Team getAway() {
         return away;
     }
 
-    public void setAway(String away) {
+    public void setAway(Team away) {
         this.away = away;
     }
 

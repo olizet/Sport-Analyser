@@ -1,7 +1,8 @@
-package com.sportsDataAnlyze.dataReplicator.service.task;
+package com.sportsDataAnlyze.dataReplicator.service.task.rep;
 
 import com.opencsv.CSVReader;
 import com.sportsDataAnlyze.dataReplicator.enums.LeagueUrlEnum;
+import com.sportsDataAnlyze.dataReplicator.service.task.ITask;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Service;
@@ -14,7 +15,7 @@ import java.nio.file.Paths;
 import java.util.*;
 
 @Service
-public abstract class AbstractTask<T,ID,DAO extends PagingAndSortingRepository<T,ID>> {
+public abstract class AbstractTask<T,ID,DAO extends PagingAndSortingRepository<T,ID>> implements ITask {
     private String[] headers;
 
     @Autowired
@@ -24,9 +25,6 @@ public abstract class AbstractTask<T,ID,DAO extends PagingAndSortingRepository<T
         this.headers = headers;
     }
 
-    protected T createInstance(Class<T> clazz) throws IllegalAccessException, InstantiationException {
-        return clazz.newInstance();
-    }
 
     public void prepareTableForRep() {
         dao.deleteAll();
@@ -49,7 +47,7 @@ public abstract class AbstractTask<T,ID,DAO extends PagingAndSortingRepository<T
                     }
                     isFirstRow = false;
                 } else {
-                    generateRowContent(headersPosition, nextRecord);
+                    mapObject( headersPosition, nextRecord);
                 }
             }
             reader.close();
@@ -66,7 +64,5 @@ public abstract class AbstractTask<T,ID,DAO extends PagingAndSortingRepository<T
         }
     }
 
-    protected abstract void generateRowContent(Map<String, Integer> headersPosition, String[] nextRecord);
-
-    protected abstract void mapObject(T object, Map<String, Integer> headersPosition, String[] nextRecord);
+    protected abstract void mapObject(Map<String, Integer> headersPosition, String[] nextRecord);
 }

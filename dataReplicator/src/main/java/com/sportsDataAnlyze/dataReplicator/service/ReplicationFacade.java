@@ -1,14 +1,12 @@
 package com.sportsDataAnlyze.dataReplicator.service;
 
-import com.sportsDataAnlyze.dataReplicator.service.task.FixtureTask;
-import com.sportsDataAnlyze.dataReplicator.service.task.RefereeTask;
-import com.sportsDataAnlyze.dataReplicator.service.task.TeamTask;
+import com.sportsDataAnlyze.dataReplicator.service.task.rep.FixtureTask;
+import com.sportsDataAnlyze.dataReplicator.service.task.rep.RefereeTask;
+import com.sportsDataAnlyze.dataReplicator.service.task.rep.TeamTask;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.sql.SQLException;
-import java.text.ParseException;
 
 @Service
 public class ReplicationFacade {
@@ -16,8 +14,8 @@ public class ReplicationFacade {
     @Autowired
     RefereeTask refereeTask;
 
-//    @Autowired
-//    CsvManager csvManager;
+    @Autowired
+    CsvManager csvManager;
 
     @Autowired
     FixtureTask fixtureTask;
@@ -26,17 +24,14 @@ public class ReplicationFacade {
     TeamTask teamTask;
 
     public void replicationService() throws IOException{
+        csvManager.createDownloadDataCSV();
+
+        fixtureTask.prepareTableForRep();
         teamTask.prepareTableForRep();
+        refereeTask.prepareTableForRep();
+
         teamTask.generateResult();
-//        refereeTask.prepareTableForRep();
-//        refereeTask.generateRefResult();
-//
-//        fixtureTask.prepareTableForRep();
-//        fixtureTask.readRepData();
-//            csvManager.createDownloadDataCSV(league);
-//            fixtureTask.repDataToDatabase(league);
-
-
-
+        refereeTask.generateResult();
+        fixtureTask.generateResult();
         }
     }

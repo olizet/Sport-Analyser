@@ -1,17 +1,20 @@
-package com.sportsDataAnlyze.dataReplicator.service.task;
+package com.sportsDataAnlyze.dataReplicator.service.task.rep;
 
 import com.sportsDataAnlyze.dataReplicator.dao.FixtureDao;
 import com.sportsDataAnlyze.dataReplicator.dao.RefereeDao;
+import com.sportsDataAnlyze.dataReplicator.dao.TeamDao;
 import com.sportsDataAnlyze.dataReplicator.entity.Fixture;
+import com.sportsDataAnlyze.dataReplicator.service.task.rep.AbstractTask;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Map;
 
 @Service
-public class FixtureTask extends AbstractTask<Fixture,Long,FixtureDao>{
+public class FixtureTask extends AbstractTask<Fixture,Long,FixtureDao> {
     private SimpleDateFormat df =new SimpleDateFormat("dd/MM/yyyy");
 
     public FixtureTask() {
@@ -21,20 +24,19 @@ public class FixtureTask extends AbstractTask<Fixture,Long,FixtureDao>{
     @Autowired
     RefereeDao refereeDao;
 
+    @Autowired
+    TeamDao teamDao;
+
     @Override
-    protected void generateRowContent(Map<String, Integer> headersPosition, String[] nextRecord) {
+    protected void mapObject(Map<String, Integer> headersPosition, String[] nextRecord) {
         Fixture fixture = new Fixture();
-        mapObject(fixture,headersPosition,nextRecord);
-    }
-    @Override
-    protected void mapObject(Fixture fixture, Map<String, Integer> headersPosition, String[] nextRecord) {
         for (Map.Entry<String, Integer> entry : headersPosition.entrySet()) {
             switch(entry.getKey()){
                 case "HomeTeam":
-                    fixture.setHome(nextRecord[entry.getValue()]);
+                    fixture.setHome(teamDao.findTeamByTeamName(nextRecord[entry.getValue()]));
                     break;
                 case "AwayTeam":
-                    fixture.setAway(nextRecord[entry.getValue()]);
+                    fixture.setAway(teamDao.findTeamByTeamName(nextRecord[entry.getValue()]));
                     break;
                 case "Div":
                     fixture.setLeague(nextRecord[entry.getValue()]);
@@ -65,15 +67,24 @@ public class FixtureTask extends AbstractTask<Fixture,Long,FixtureDao>{
                     fixture.setAwayCorners(Integer.parseInt(nextRecord[entry.getValue()]));
                     break;
                 case "Referee":
-                    fixture.setRefereeId(refereeDao.findRefByName(nextRecord[entry.getValue()].replace(" ",".")));
+                    fixture.setRefName(refereeDao.findByRefName(nextRecord[entry.getValue()].replace(" ",".")));
                     break;
                 case "FTR" : fixture.setResult(nextRecord[entry.getValue()]);
                     break;
             }
         }
         if(!headersPosition.containsKey("Referee")){
-            fixture.setRefereeId(null);
+            fixture.setRefName(null);
         }
         dao.save(fixture);
+    }
+
+    @Override
+    public void generateResult() {
+        try {
+            readRepData();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

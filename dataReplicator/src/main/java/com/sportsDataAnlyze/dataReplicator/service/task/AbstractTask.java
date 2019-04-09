@@ -24,6 +24,10 @@ public abstract class AbstractTask<T,ID,DAO extends PagingAndSortingRepository<T
         this.headers = headers;
     }
 
+    protected T createInstance(Class<T> clazz) throws IllegalAccessException, InstantiationException {
+        return clazz.newInstance();
+    }
+
     public void prepareTableForRep() {
         dao.deleteAll();
     }
@@ -45,7 +49,7 @@ public abstract class AbstractTask<T,ID,DAO extends PagingAndSortingRepository<T
                     }
                     isFirstRow = false;
                 } else {
-                    generateRowContent(headersPosition, nextRecord, league);
+                    generateRowContent(headersPosition, nextRecord);
                 }
             }
             reader.close();
@@ -62,5 +66,7 @@ public abstract class AbstractTask<T,ID,DAO extends PagingAndSortingRepository<T
         }
     }
 
-    protected abstract void generateRowContent(Map<String, Integer> headersPosition, String[] nextRecord,LeagueUrlEnum leagueUrlEnum);
+    protected abstract void generateRowContent(Map<String, Integer> headersPosition, String[] nextRecord);
+
+    protected abstract void mapObject(T object, Map<String, Integer> headersPosition, String[] nextRecord);
 }

@@ -3,7 +3,6 @@ package com.sportsDataAnlyze.dataReplicator.service.task;
 import com.sportsDataAnlyze.dataReplicator.dao.FixtureDao;
 import com.sportsDataAnlyze.dataReplicator.dao.RefereeDao;
 import com.sportsDataAnlyze.dataReplicator.entity.Fixture;
-import com.sportsDataAnlyze.dataReplicator.enums.LeagueUrlEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,13 +22,12 @@ public class FixtureTask extends AbstractTask<Fixture,Long,FixtureDao>{
     RefereeDao refereeDao;
 
     @Override
-    protected void generateRowContent(Map<String, Integer> headersPosition, String[] nextRecord, LeagueUrlEnum leagueUrlEnum) {
+    protected void generateRowContent(Map<String, Integer> headersPosition, String[] nextRecord) {
         Fixture fixture = new Fixture();
-        fixture = mapObject(fixture,headersPosition,nextRecord);
-        dao.save(fixture);
+        mapObject(fixture,headersPosition,nextRecord);
     }
-
-    private Fixture mapObject(Fixture fixture, Map<String, Integer> headersPosition, String[] nextRecord) {
+    @Override
+    protected void mapObject(Fixture fixture, Map<String, Integer> headersPosition, String[] nextRecord) {
         for (Map.Entry<String, Integer> entry : headersPosition.entrySet()) {
             switch(entry.getKey()){
                 case "HomeTeam":
@@ -76,6 +74,6 @@ public class FixtureTask extends AbstractTask<Fixture,Long,FixtureDao>{
         if(!headersPosition.containsKey("Referee")){
             fixture.setRefereeId(null);
         }
-        return fixture;
+        dao.save(fixture);
     }
 }

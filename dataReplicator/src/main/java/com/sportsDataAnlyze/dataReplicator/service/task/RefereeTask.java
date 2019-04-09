@@ -2,7 +2,6 @@ package com.sportsDataAnlyze.dataReplicator.service.task;
 
 import com.sportsDataAnlyze.dataReplicator.dao.RefereeDao;
 import com.sportsDataAnlyze.dataReplicator.entity.Referee;
-import com.sportsDataAnlyze.dataReplicator.enums.LeagueUrlEnum;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -27,12 +26,13 @@ public class RefereeTask extends AbstractTask<Referee,Long,RefereeDao> {
     }
 
     @Override
-    protected void generateRowContent(Map<String, Integer> headersPosition, String[] nextRecord, LeagueUrlEnum leagueUrlEnum) {
+    protected void generateRowContent(Map<String, Integer> headersPosition, String[] nextRecord) {
         Referee ref = new Referee();
-        mapObject(ref,headersPosition,nextRecord,leagueUrlEnum);
+        mapObject(ref,headersPosition,nextRecord);
     }
 
-    private void mapObject(Referee ref, Map<String, Integer> headersPosition, String[] nextRecord, LeagueUrlEnum leagueUrlEnum) {
+    @Override
+    protected void mapObject(Referee ref, Map<String, Integer> headersPosition, String[] nextRecord) {
         for (Map.Entry<String, Integer> entry : headersPosition.entrySet()) {
             switch(entry.getKey()){
                 case "Referee":

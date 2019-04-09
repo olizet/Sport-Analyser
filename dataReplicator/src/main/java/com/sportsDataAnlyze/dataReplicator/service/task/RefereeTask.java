@@ -2,40 +2,67 @@ package com.sportsDataAnlyze.dataReplicator.service.task;
 
 import com.sportsDataAnlyze.dataReplicator.dao.RefereeDao;
 import com.sportsDataAnlyze.dataReplicator.entity.Referee;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.sportsDataAnlyze.dataReplicator.enums.LeagueUrlEnum;
 import org.springframework.stereotype.Component;
 
-import javax.transaction.Transactional;
-import java.util.HashMap;
-import java.util.List;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 @Component
-public class RefereeTask implements ITask {
+public class RefereeTask extends AbstractTask<Referee,Long,RefereeDao> {
 
-    private HashMap<String,Double>  referees;
+    private ArrayList<Referee> refereesInput = new ArrayList<>();
+    private Set<String > refs = new HashSet<>();
 
-    @Autowired
-    RefereeDao refereeDao;
-
-    @Override
-    @Transactional
-    public void prepareTableForReplication()  {
-        refereeDao.deleteAll();
+    public RefereeTask() {
+        super(new String[]{"Referee","HY","AY"});
     }
 
-    @Transactional
-    public void repDataToDatabase() {
-        List<Referee> referees = refereeDao.getReferees();
+    public void generateRefResult() throws IOException {
+        readRepData();
+        convertInput();
+    }
+
+    @Override
+    protected void generateRowContent(Map<String, Integer> headersPosition, String[] nextRecord, LeagueUrlEnum leagueUrlEnum) {
         Referee ref = new Referee();
-        ref.setRefName("M_Dean");
-        ref.setAvgCards(3.5);
-        refereeDao.save(ref);
-        //        for(Referee r : referees){
-//            Referee ref = new Referee();
-//            ref.setRefName(r.getRefName().replace("_","."));
-//            ref.setAvgCards(r.getAvgCards());
-//            refereeDao.save(ref);
-//        }
-//        refereeDao.saveAll(referees);
+        mapObject(ref,headersPosition,nextRecord,leagueUrlEnum);
+    }
+
+    private void mapObject(Referee ref, Map<String, Integer> headersPosition, String[] nextRecord, LeagueUrlEnum leagueUrlEnum) {
+        for (Map.Entry<String, Integer> entry : headersPosition.entrySet()) {
+            switch(entry.getKey()){
+                case "Referee":
+                    ref.setRefName(nextRecord[entry.getValue()]);
+                    refs.add(ref.getRefName());
+                    ref.setMatches(ref.getMatches()+1);
+                    break;
+                case "AY":
+                    ref.setCards(ref.getCards()+Integer.valueOf(nextRecord[entry.getValue()]));
+                    break;
+                case "HY":
+                    ref.setCards(ref.getCards()+Integer.valueOf(nextRecord[entry.getValue()]));
+                    break;
+            }
+        }
+        refereesInput.add(ref);
+    }
+
+    private void convertInput(){
+        for(String name:refs){
+            Referee ref = new Referee();
+            for(Referee r:refereesInput){
+                if(name.equals(r.getRefName())){
+                    ref.setCards(ref.getCards() + r.getCards());
+                    ref.setMatches(ref.getMatches()+1);
+                }
+            }
+            ref.setRefName(name.replace(" ","."));
+            ref.setAvgCards(Double.valueOf(ref.getCards())/Double.valueOf(ref.getMatches()));
+            dao.save(ref);
+        }
     }
 }

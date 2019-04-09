@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Component
-public class TeamTask implements ITask {
+public class TeamTask {
     private ArrayList<String> leagueTeams = new ArrayList<>();
     private Map<String, Integer> overallTable = new HashMap<>();
     private Map<String, Integer> homeTable = new HashMap<>();
@@ -20,7 +20,6 @@ public class TeamTask implements ITask {
     private Map<String, Double> corners = new HashMap<>();
     private Map<String, Double> cards = new HashMap<>();
 
-    @Override
     public void prepareTableForReplication() throws SQLException {
         String query = "DELETE FROM football.team";
         Connection c = DriverManager.getConnection("jdbc:postgresql://localhost:5432/sports_data","postgres","bookmaker");

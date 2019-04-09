@@ -1,6 +1,5 @@
 package com.sportsDataAnlyze.dataReplicator.service;
 
-import com.sportsDataAnlyze.dataReplicator.enums.LeagueUrlEnum;
 import com.sportsDataAnlyze.dataReplicator.service.task.FixtureTask;
 import com.sportsDataAnlyze.dataReplicator.service.task.RefereeTask;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,19 +15,22 @@ public class ReplicationFacade {
     @Autowired
     RefereeTask refereeTask;
 
-    @Autowired
-    CsvManager csvManager;
+//    @Autowired
+//    CsvManager csvManager;
 
     @Autowired
     FixtureTask fixtureTask;
 
-    public void replicationService() throws IOException, SQLException, ParseException {
-//        refereeTask.prepareTableForReplication();
-//        fixtureTask.prepareTableForReplication();
-        for (LeagueUrlEnum league : LeagueUrlEnum.values()) {
+    public void replicationService() throws IOException{
+        refereeTask.prepareTableForRep();
+        refereeTask.generateRefResult();
+
+        fixtureTask.prepareTableForRep();
+        fixtureTask.readRepData();
 //            csvManager.createDownloadDataCSV(league);
 //            fixtureTask.repDataToDatabase(league);
+
+
+
         }
-        refereeTask.repDataToDatabase();
     }
-}

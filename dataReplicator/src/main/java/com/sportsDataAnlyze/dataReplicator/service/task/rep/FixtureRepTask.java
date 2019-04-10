@@ -4,7 +4,8 @@ import com.sportsDataAnlyze.dataReplicator.dao.FixtureDao;
 import com.sportsDataAnlyze.dataReplicator.dao.RefereeDao;
 import com.sportsDataAnlyze.dataReplicator.dao.TeamDao;
 import com.sportsDataAnlyze.dataReplicator.entity.Fixture;
-import com.sportsDataAnlyze.dataReplicator.service.task.rep.AbstractTask;
+import com.sportsDataAnlyze.dataReplicator.enums.LeagueUrlEnum;
+import com.sportsDataAnlyze.dataReplicator.service.task.utils.RepUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,10 +15,10 @@ import java.text.SimpleDateFormat;
 import java.util.Map;
 
 @Service
-public class FixtureTask extends AbstractTask<Fixture,Long,FixtureDao> {
+public class FixtureRepTask extends AbstractRepTask<Fixture,Long,FixtureDao> {
     private SimpleDateFormat df =new SimpleDateFormat("dd/MM/yyyy");
 
-    public FixtureTask() {
+    public FixtureRepTask() {
         super(new String[]{"Div","Date","HomeTeam","AwayTeam","FTR","FTHG","FTAG","Referee","HC","AC","HY","AY"});
     }
 
@@ -39,7 +40,7 @@ public class FixtureTask extends AbstractTask<Fixture,Long,FixtureDao> {
                     fixture.setAway(teamDao.findTeamByTeamName(nextRecord[entry.getValue()]));
                     break;
                 case "Div":
-                    fixture.setLeague(nextRecord[entry.getValue()]);
+                    fixture.setLeague(RepUtils.convertStringToLeague(nextRecord[entry.getValue()]));
                     break;
                 case "Date":
                     try {

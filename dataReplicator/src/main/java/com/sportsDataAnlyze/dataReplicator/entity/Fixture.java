@@ -1,7 +1,11 @@
 package com.sportsDataAnlyze.dataReplicator.entity;
 
+import com.sportsDataAnlyze.dataReplicator.enums.LeagueUrlEnum;
+
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(schema = "football", name="fixture")
@@ -20,7 +24,8 @@ public class Fixture {
     private Team away;
 
     @Column(name="league")
-    private String league;
+    @Enumerated(EnumType.STRING)
+    private LeagueUrlEnum league;
 
     @Column(name="fixture_date")
     private Date fixtureDate;
@@ -49,7 +54,6 @@ public class Fixture {
 
     @Column(name="result")
     private String result;
-
 
     public Referee getRefName() {
         return refName;
@@ -91,11 +95,11 @@ public class Fixture {
         this.away = away;
     }
 
-    public String getLeague() {
+    public LeagueUrlEnum getLeague() {
         return league;
     }
 
-    public void setLeague(String league) {
+    public void setLeague(LeagueUrlEnum league) {
         this.league = league;
     }
 

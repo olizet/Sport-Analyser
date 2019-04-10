@@ -2,6 +2,7 @@ package com.sportsDataAnlyze.dataReplicator.service.task.rep;
 
 import com.sportsDataAnlyze.dataReplicator.dao.TeamDao;
 import com.sportsDataAnlyze.dataReplicator.entity.Team;
+import com.sportsDataAnlyze.dataReplicator.service.task.utils.RepUtils;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -10,10 +11,10 @@ import java.util.Map;
 import java.util.Set;
 
 @Service
-public class TeamTask extends AbstractTask<Team,String,TeamDao> {
+public class TeamRepTask extends AbstractRepTask<Team,String,TeamDao> {
     private Set<Team> teams = new HashSet<>();
 
-    public TeamTask() {
+    public TeamRepTask() {
         super(new String[]{"HomeTeam","AwayTeam","Div"});
     }
 
@@ -30,8 +31,8 @@ public class TeamTask extends AbstractTask<Team,String,TeamDao> {
                     awayTeam.setTeamName(nextRecord[entry.getValue()]);
                     break;
                 case "Div":
-                    homeTeam.setLeague(nextRecord[entry.getValue()]);
-                    awayTeam.setLeague(nextRecord[entry.getValue()]);
+                    homeTeam.setLeague(RepUtils.convertStringToLeague(nextRecord[entry.getValue()]));
+                    awayTeam.setLeague(RepUtils.convertStringToLeague(nextRecord[entry.getValue()]));
                     break;
             }
         }

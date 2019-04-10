@@ -15,13 +15,13 @@ import java.nio.file.Paths;
 import java.util.*;
 
 @Service
-public abstract class AbstractTask<T,ID,DAO extends PagingAndSortingRepository<T,ID>> implements ITask {
+public abstract class AbstractRepTask<T,ID,DAO extends PagingAndSortingRepository<T,ID>> implements ITask {
     private String[] headers;
 
     @Autowired
     protected DAO dao;
 
-    public AbstractTask(String[] headers) {
+    public AbstractRepTask(String[] headers) {
         this.headers = headers;
     }
 

@@ -3,6 +3,8 @@ package com.sportsDataAnlyze.dataReplicator.entity;
 import com.sportsDataAnlyze.dataReplicator.enums.LeagueUrlEnum;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(schema = "football", name="team")
@@ -12,24 +14,18 @@ public class Team {
     private String teamName;
 
     @Column(name="league")
-    private String league;
+    @Enumerated(EnumType.STRING)
+    private LeagueUrlEnum league;
 
     @Column(name = "position_overall")
-    private Double position;
+    private Integer position;
 
     @Column(name="position_home")
-    private Double positionH;
+    private Integer positionH;
 
     @Column(name="position_away")
-    private Double positionA;
+    private Integer positionA;
 
-    public String getLeague() {
-        return league;
-    }
-
-    public void setLeague(String league) {
-        this.league = league;
-    }
 
     public String getTeamName() {
         return teamName;
@@ -39,27 +35,35 @@ public class Team {
         this.teamName = teamName;
     }
 
-    public Double getPosition() {
+    public LeagueUrlEnum getLeague() {
+        return league;
+    }
+
+    public void setLeague(LeagueUrlEnum league) {
+        this.league = league;
+    }
+
+    public Integer getPosition() {
         return position;
     }
 
-    public void setPosition(Double position) {
+    public void setPosition(Integer position) {
         this.position = position;
     }
 
-    public Double getPositionH() {
+    public Integer getPositionH() {
         return positionH;
     }
 
-    public void setPositionH(Double positionH) {
+    public void setPositionH(Integer positionH) {
         this.positionH = positionH;
     }
 
-    public Double getPositionA() {
+    public Integer getPositionA() {
         return positionA;
     }
 
-    public void setPositionA(Double positionA) {
+    public void setPositionA(Integer positionA) {
         this.positionA = positionA;
     }
 }

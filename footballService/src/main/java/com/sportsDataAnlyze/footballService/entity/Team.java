@@ -1,6 +1,7 @@
 package com.sportsDataAnlyze.footballService.entity;
 
-import com.sportsDataAnlyze.dataReplicator.enums.LeagueUrlEnum;
+
+import com.sportsDataAnlyze.footballService.enums.LeagueUrlEnum;
 
 import javax.persistence.*;
 

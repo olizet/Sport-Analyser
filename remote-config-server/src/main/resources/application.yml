@@ -1,0 +1,21 @@
+server:
+  port: 9000
+spring:
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/olizetTest/sport-data-analyze-config-server
+          searchPaths: dataReplicator,footballService
+          username: olizetTest
+          password: Tymon90!
+management:
+  server:
+    port: 9001
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: "always"

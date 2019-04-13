@@ -1,0 +1,7 @@
+spring.jpa.properties.hibernate.jdbc.lob.non_contextual_creation=true
+spring.datasource.platform=postgres
+spring.datasource.url= jdbc:postgresql://localhost:5432/sports_data
+spring.datasource.username=postgres
+spring.datasource.password=bookmaker
+spring.datasource.hikari.maximum-pool-size=48
+spring.datasource.hikari.leak-detection-threshold=48

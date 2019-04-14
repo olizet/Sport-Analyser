@@ -1,0 +1,70 @@
+server:
+  port: ${PORT:8085}
+
+spring:
+  application:
+    name: gateway
+  cloud:
+    gateway:
+       discovery:
+        locator:
+          enabled: true
+       routes:
+#       footballService
+        - id: team-get
+          uri: lb://footballService
+          predicates:
+          - Method=GET
+          - Path=/team/**
+          filters:
+          - RewritePath=/(?<path>.*), /$\{path}
+        - id: team-post
+          uri: lb://footballService
+          predicates:
+          - Method=POST
+          - Path=/team/**
+          filters:
+          - RewritePath=/(?<path>.*), /$\{path}
+        - id: team-put
+          uri: lb://footballService
+          predicates:
+          - Method=PUT
+          - Path=/team/**
+          filters:
+          - RewritePath=/(?<path>.*), /$\{path}
+        - id: account-service-delete
+          uri: lb://footballService
+          predicates:
+          - Method=DELETE
+          - Path=/team/**
+          filters:
+          - RewritePath=/(?<path>.*), /$\{path}
+#          replicator
+        - id: -replicator-get
+          uri: lb://dataReplicator
+          predicates:
+          - Method=GET
+          - Path=/replicator/**
+          filters:
+          - RewritePath=/(?<path>.*), /$\{path}
+        - id: replicator-post
+          uri: lb://dataReplicator
+          predicates:
+          - Method=POST
+          - Path=/replicator/**
+          filters:
+          - RewritePath=/(?<path>.*), /$\{path}
+        - id: replicator-put
+          uri: lb://dataReplicator
+          predicates:
+          - Method=PUT
+          - Path=/replicator/**
+          filters:
+          - RewritePath=/(?<path>.*), /$\{path}
+        - id: replicator-delete
+          uri: lb://dataReplicator
+          predicates:
+          - Method=DELETE
+          - Path=/replicator/**
+          filters:
+          - RewritePath=/(?<path>.*), /$\{path}

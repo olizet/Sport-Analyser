@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.text.ParseException;
 
 @Controller
+@RequestMapping("/replicator")
 public class ReplicationController {
 
     @Autowired

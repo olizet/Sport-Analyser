@@ -1,31 +1,20 @@
 package com.sportsDataAnlyze.dataReplicator.entity;
 
-import com.sportsDataAnlyze.dataReplicator.enums.LeagueUrlEnum;
-
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.Map;
 
-@Entity
-@Table(schema = "football", name="team")
 public class Team {
-    @Id
-    @Column(name = "team_name")
     private String teamName;
-
-    @Column(name="league")
-    @Enumerated(EnumType.STRING)
-    private LeagueUrlEnum league;
-
-    @Column(name = "position_overall")
+    private String league;
     private Integer position;
-
-    @Column(name="position_home")
     private Integer positionH;
-
-    @Column(name="position_away")
     private Integer positionA;
 
+
+    public Team(String teamName, String league) {
+        this.teamName = teamName;
+        this.league = league;
+    }
 
     public String getTeamName() {
         return teamName;
@@ -35,11 +24,11 @@ public class Team {
         this.teamName = teamName;
     }
 
-    public LeagueUrlEnum getLeague() {
+    public String getLeague() {
         return league;
     }
 
-    public void setLeague(LeagueUrlEnum league) {
+    public void setLeague(String league) {
         this.league = league;
     }
 
@@ -65,5 +54,18 @@ public class Team {
 
     public void setPositionA(Integer positionA) {
         this.positionA = positionA;
+    }
+
+    public String getInsertQuery(){
+        return String.format("INSERT INTO football.team (team_name,league,position_overall,position_home,position_away)" +
+                        "VALUES('%s','%s','%s','%s','%s')",
+                this.teamName,this.league,this.position,this.positionH,this.positionA);
+    }
+
+    public Team setPositions(Map<String,Integer> homeTable, Map<String,Integer> awayTable, Map<String,Integer> overallTable) {
+        this.setPositionH(homeTable.get(this.getTeamName()));
+        this.setPositionA(awayTable.get(this.getTeamName()));
+        this.setPosition(overallTable.get(this.getTeamName()));
+        return this;
     }
 }

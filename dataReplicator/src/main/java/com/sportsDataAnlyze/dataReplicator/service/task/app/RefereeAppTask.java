@@ -1,48 +1,35 @@
 package com.sportsDataAnlyze.dataReplicator.service.task.app;
 
-import com.sportsDataAnlyze.dataReplicator.dao.RefereeDao;
-import com.sportsDataAnlyze.dataReplicator.entity.Referee;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.sportsDataAnlyze.dataReplicator.enums.SourceUrlEnum;
+import com.sportsDataAnlyze.dataReplicator.service.task.ReplicationTask;
 import org.springframework.stereotype.Service;
 
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.sql.Statement;
 
 @Service
-public class RefereeAppTask extends AbstractAppTask {
-    private final String query="select f.ref_name,round(avg(f.home_yellows+away_yellows),1) as avg_cards " +
-                                "from football.fixture f " +
-                                "where f.ref_name is not null " +
-                                "group by ref_name";
-
-    private ArrayList<Referee> refs = new ArrayList<>();
-    private HashMap<String,Double> refsMap = new HashMap<>();
-
-    @Autowired
-    RefereeDao refDao;
+public class RefereeAppTask extends ReplicationTask {
+    private static final String QUERY=
+            "insert into football.referee(ref_name,avg_cards,league,matches) \n" +
+            " select \n" +
+            "f.ref_name, \n" +
+            "round(avg(cast(f.home_yellows as integer)+ cast(f.away_yellows as integer)),1) as avg_cards,\n" +
+            "f.league,\n" +
+            "count(f.league) as matches\n" +
+            "from rep_data.football f \n" +
+            "where f.ref_name is not null \n" +
+            "group by ref_name,league";
 
     @Override
-    protected void update() {
-        try {
-            ResultSet rs = executeQuery(query);
-            while(rs.next()){
-                refsMap.put(rs.getString("ref_name"),rs.getDouble("avg_cards"));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
+    public void createReplicationFlow(SourceUrlEnum sourceUrlEnum) throws SQLException {
+        Statement statement = connection.createStatement();
+        statement.executeUpdate(QUERY);
+        connection.commit();
     }
 
     @Override
-    public void generateResult() {
-        refs = (ArrayList<Referee>) refDao.findAll();
-        update();
-        for(Referee ref:refs){
-            ref.setAvgCards(refsMap.get(ref.getRefName()));
-        }
-        refDao.saveAll(refs);
+    public void wipeTable() throws SQLException {
+        connection.createStatement().executeUpdate("DELETE FROM football.referee");
+        connection.commit();
     }
 }

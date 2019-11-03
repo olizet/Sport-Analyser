@@ -1,161 +1,82 @@
 package com.sportsDataAnlyze.dataReplicator.entity;
 
-import com.sportsDataAnlyze.dataReplicator.enums.LeagueUrlEnum;
+import java.util.Objects;
 
-import javax.persistence.*;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
-
-@Entity
-@Table(schema = "football", name="fixture")
 public class Fixture {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @ManyToOne(cascade = CascadeType.ALL,targetEntity = Team.class)
-    @JoinColumn(name="home")
-    private Team home;
-
-    @ManyToOne(cascade = CascadeType.ALL,targetEntity = Team.class)
-    @JoinColumn(name="away")
-    private Team away;
-
-    @Column(name="league")
-    @Enumerated(EnumType.STRING)
-    private LeagueUrlEnum league;
-
-    @Column(name="fixture_date")
-    private Date fixtureDate;
-
-    @Column(name="home_goals")
-    private Integer homeGoals;
-
-    @Column(name="away_goals")
-    private Integer awayGoals;
-
-    @Column(name="home_yellows")
-    private Integer homeYellows;
-
-    @Column(name="away_yellows")
-    private Integer awayTellows;
-
-    @Column(name="home_corners")
-    private Integer homeCorners;
-
-    @Column(name="away_corners")
-    private Integer awayCorners;
-
-    @ManyToOne(cascade = CascadeType.ALL,targetEntity = Referee.class)
-    @JoinColumn(name="ref_name")
-    private Referee refName;
-
-    @Column(name="result")
+    private String home;
+    private String away;
+    private String league;
+    private String fixtureDate;
+    private String homeGoals;
+    private String awayGoals;
+    private String homeYellows;
+    private String awawyYellows;
+    private String homeCorners;
+    private String awayCorners;
     private String result;
+    private String referee;
 
-    public Referee getRefName() {
-        return refName;
+
+    public void setHome(String home) {
+        this.home = home.replace("'","");
     }
 
-    public void setRefName(Referee refName) {
-        this.refName = refName;
+    public void setAway(String away) {
+        this.away = away.replace("'","");
     }
 
-    public String getResult() {
-        return result;
+    public void setLeague(String league) {
+        this.league = league;
+    }
+
+    public void setFixtureDate(String fixtureDate) {
+        this.fixtureDate = fixtureDate;
+    }
+
+    public void setHomeGoals(String homeGoals) {
+        this.homeGoals = homeGoals;
+    }
+
+    public void setAwayGoals(String awayGoals) {
+        this.awayGoals = awayGoals;
+    }
+
+    public void setHomeYellows(String homeYellows) {
+        this.homeYellows = homeYellows;
+    }
+
+    public void setAwawyYellows(String awawyYellows) {
+        this.awawyYellows = awawyYellows;
+    }
+
+    public void setHomeCorners(String homeCorners) {
+        this.homeCorners = homeCorners;
+    }
+
+    public void setAwayCorners(String awayCorners) {
+        this.awayCorners = awayCorners;
     }
 
     public void setResult(String result) {
         this.result = result;
     }
 
-    public Long getId() {
-        return id;
+    public void setReferee(String referee) {
+        this.referee = referee;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    public String getInsertQuery(){
 
-    public Team getHome() {
-        return home;
-    }
-
-    public void setHome(Team home) {
-        this.home = home;
-    }
-
-    public Team getAway() {
-        return away;
-    }
-
-    public void setAway(Team away) {
-        this.away = away;
-    }
-
-    public LeagueUrlEnum getLeague() {
-        return league;
-    }
-
-    public void setLeague(LeagueUrlEnum league) {
-        this.league = league;
-    }
-
-    public Date getFixtureDate() {
-        return fixtureDate;
-    }
-
-    public void setFixtureDate(Date fixtureDate) {
-        this.fixtureDate = fixtureDate;
-    }
-
-    public Integer getHomeGoals() {
-        return homeGoals;
-    }
-
-    public void setHomeGoals(Integer homeGoals) {
-        this.homeGoals = homeGoals;
-    }
-
-    public Integer getAwayGoals() {
-        return awayGoals;
-    }
-
-    public void setAwayGoals(Integer awayGoals) {
-        this.awayGoals = awayGoals;
-    }
-
-    public Integer getHomeYellows() {
-        return homeYellows;
-    }
-
-    public void setHomeYellows(Integer homeYellows) {
-        this.homeYellows = homeYellows;
-    }
-
-    public Integer getAwayTellows() {
-        return awayTellows;
-    }
-
-    public void setAwayTellows(Integer awayTellows) {
-        this.awayTellows = awayTellows;
-    }
-
-    public Integer getHomeCorners() {
-        return homeCorners;
-    }
-
-    public void setHomeCorners(Integer homeCorners) {
-        this.homeCorners = homeCorners;
-    }
-
-    public Integer getAwayCorners() {
-        return awayCorners;
-    }
-
-    public void setAwayCorners(Integer awayCorners) {
-        this.awayCorners = awayCorners;
+        if(Objects.isNull(referee)){
+            return String.format("INSERT INTO rep_data.football (home,away,league,fixture_date,home_goals,away_goals,home_yellows,away_yellows," +
+                    "home_corners,away_corners,result) VALUES('%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s')",
+                    this.home,this.away,this.league,this.fixtureDate,this.homeGoals,this.awayGoals,this.homeYellows,this.awawyYellows,this.homeCorners,
+                    this.awayCorners,this.result);
+        } else {
+            return String.format("INSERT INTO rep_data.football (home,away,league,fixture_date,home_goals,away_goals," +
+                    "home_yellows,away_yellows,home_corners,away_corners,result,ref_name) VALUES('%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s')",
+                    this.home,this.away,this.league,this.fixtureDate,this.homeGoals,this.awayGoals,this.homeYellows,this.awawyYellows,this.homeCorners,
+                    this.awayCorners,this.result, this.referee);
+        }
     }
 }

@@ -1,6 +1,6 @@
 package com.sportsDataAnlyze.dataReplicator.service;
 
-import com.sportsDataAnlyze.dataReplicator.enums.LeagueUrlEnum;
+import com.sportsDataAnlyze.dataReplicator.enums.SourceUrlEnum;
 import org.apache.commons.io.FileUtils;
 import org.springframework.stereotype.Component;
 
@@ -9,9 +9,9 @@ import java.io.IOException;
 import java.net.URL;
 
 @Component
-public class CsvManager {
+public class CsvController {
     public void createDownloadDataCSV() {
-        for (LeagueUrlEnum league : LeagueUrlEnum.values()) {
+        for (SourceUrlEnum league : SourceUrlEnum.values()) {
             File directory = new File("data");
             String toFile = "data/" + league.name().toLowerCase() + ".csv";
             File file = new File(toFile);

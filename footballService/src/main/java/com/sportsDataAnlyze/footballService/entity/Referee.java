@@ -13,19 +13,11 @@ public class Referee {
     @Column(name="avg_cards")
     private Double avgCards = 0.0;
 
-    @Transient
-    private Integer cards = 0;
+    @Column(name="league")
+    private String league;
 
-    @Transient
-    private Integer matches = 0;
-
-    public Integer getCards() {
-        return cards;
-    }
-
-    public void setCards(Integer cards) {
-        this.cards = cards;
-    }
+    @Column(name="matches")
+    private Integer matches;
 
     public Integer getMatches() {
         return matches;
@@ -34,7 +26,6 @@ public class Referee {
     public void setMatches(Integer matches) {
         this.matches = matches;
     }
-
 
     public String getRefName() {
         return refName;
@@ -51,4 +42,8 @@ public class Referee {
     public void setAvgCards(Double avgCards) {
         this.avgCards = avgCards;
     }
+
+    public String getLeague() { return league; }
+
+    public void setLeague(String league) { this.league = league; }
 }

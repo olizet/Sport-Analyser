@@ -13,9 +13,6 @@ public class Referee {
     @Column(name="avg_cards")
     private Double avgCards = 0.0;
 
-    @Column(name="league")
-    private String league;
-
     @Column(name="matches")
     private Integer matches;
 
@@ -42,8 +39,4 @@ public class Referee {
     public void setAvgCards(Double avgCards) {
         this.avgCards = avgCards;
     }
-
-    public String getLeague() { return league; }
-
-    public void setLeague(String league) { this.league = league; }
 }

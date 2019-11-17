@@ -6,6 +6,7 @@ import com.sportsDataAnlyze.footballService.enums.LeagueUrlEnum;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Objects;
 
 @Entity
 @Table(schema = "football", name="fixture")
@@ -40,7 +41,7 @@ public class Fixture {
     private Integer homeYellows;
 
     @Column(name="away_yellows")
-    private Integer awayTellows;
+    private Integer awayYellows;
 
     @Column(name="home_corners")
     private Integer homeCorners;
@@ -49,7 +50,9 @@ public class Fixture {
     private Integer awayCorners;
 
     @ManyToOne(cascade = CascadeType.ALL,targetEntity = Referee.class)
-    @JoinColumn(name="ref_name")
+    @JoinColumns({
+            @JoinColumn(name="ref_name",updatable=false,insertable=false)
+    })
     private Referee refName;
 
     @Column(name="result")
@@ -135,12 +138,12 @@ public class Fixture {
         this.homeYellows = homeYellows;
     }
 
-    public Integer getAwayTellows() {
-        return awayTellows;
+    public Integer getAwayYellows() {
+        return awayYellows;
     }
 
-    public void setAwayTellows(Integer awayTellows) {
-        this.awayTellows = awayTellows;
+    public void setAwayYellows(Integer awayYellows) {
+        this.awayYellows = awayYellows;
     }
 
     public Integer getHomeCorners() {
@@ -157,5 +160,46 @@ public class Fixture {
 
     public void setAwayCorners(Integer awayCorners) {
         this.awayCorners = awayCorners;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj==null){
+            return false;
+        } else{
+            Fixture fixture2 = (Fixture) obj;
+            if(!this.getHome().equals(fixture2.getHome())){
+                return false;
+            }else if(!this.getAway().equals(fixture2.getAway())){
+                return false;
+            } else if(!this.getLeague().equals(fixture2.getLeague())){
+                return false;
+            } else if(!this.getFixtureDate().equals(fixture2.fixtureDate)){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.getHome(),this.getAway(),this.getLeague(),this.getFixtureDate());
+    }
+
+    public Fixture() {}
+
+    public Fixture(Team home, Team away, LeagueUrlEnum league, Date fixtureDate, Integer homeGoals, Integer awayGoals, Integer homeYellows, Integer awayYellows, Integer homeCorners, Integer awayCorners, Referee refName, String result) {
+        this.home = home;
+        this.away = away;
+        this.league = league;
+        this.fixtureDate = fixtureDate;
+        this.homeGoals = homeGoals;
+        this.awayGoals = awayGoals;
+        this.homeYellows = homeYellows;
+        this.awayYellows = awayYellows;
+        this.homeCorners = homeCorners;
+        this.awayCorners = awayCorners;
+        this.refName = refName;
+        this.result = result;
     }
 }

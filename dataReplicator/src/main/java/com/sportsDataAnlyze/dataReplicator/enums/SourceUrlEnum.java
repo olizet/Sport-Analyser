@@ -6,7 +6,10 @@ public enum SourceUrlEnum {
     E0("http://www.football-data.co.uk/mmz4281/1920/E0.csv"),
     E1("http://www.football-data.co.uk/mmz4281/1920/E1.csv"),
     SP1("http://www.football-data.co.uk/mmz4281/1920/SP1.csv"),
-    D1("http://www.football-data.co.uk/mmz4281/1920/D1.csv");
+    D1("http://www.football-data.co.uk/mmz4281/1920/D1.csv"),
+    B1("https://www.football-data.co.uk/mmz4281/1920/B1.csv"),
+    P1("https://www.football-data.co.uk/mmz4281/1920/P1.csv"),
+    N1("https://www.football-data.co.uk/mmz4281/1920/N1.csv");
 
     private String link;
 

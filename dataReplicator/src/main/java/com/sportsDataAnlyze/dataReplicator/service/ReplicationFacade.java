@@ -41,6 +41,9 @@ public class ReplicationFacade {
         fixtureRepTask.createReplicationFlow(SourceUrlEnum.SP1);
         fixtureRepTask.createReplicationFlow(SourceUrlEnum.I1);
         fixtureRepTask.createReplicationFlow(SourceUrlEnum.F1);
+        fixtureRepTask.createReplicationFlow(SourceUrlEnum.B1);
+        fixtureRepTask.createReplicationFlow(SourceUrlEnum.N1);
+        fixtureRepTask.createReplicationFlow(SourceUrlEnum.P1);
 
         // cleaning current replicated tables in database
         fixtureAppTask.wipeTable();
@@ -54,6 +57,9 @@ public class ReplicationFacade {
         teamAppTask.createReplicationFlow(SourceUrlEnum.D1);
         teamAppTask.createReplicationFlow(SourceUrlEnum.F1);
         teamAppTask.createReplicationFlow(SourceUrlEnum.I1);
+        teamAppTask.createReplicationFlow(SourceUrlEnum.B1);
+        teamAppTask.createReplicationFlow(SourceUrlEnum.N1);
+        teamAppTask.createReplicationFlow(SourceUrlEnum.P1);
         refereeAppTask.createReplicationFlow(null);
         fixtureAppTask.createReplicationFlow(null);
         }

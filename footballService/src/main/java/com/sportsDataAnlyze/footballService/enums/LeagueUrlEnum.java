@@ -6,5 +6,8 @@ public enum LeagueUrlEnum {
     E0,
     E1,
     SP1,
-    D1
+    D1,
+    B1,
+    P1,
+    N1
 }

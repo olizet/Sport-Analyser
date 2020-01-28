@@ -5,6 +5,7 @@ import com.sportsDataAnlyze.footballService.entity.Team;
 public class RapportDto {
     private Team homeTeam;
     private Team awayTeam;
+    private CombinedRapportDto combinedRapport;
 
     public RapportDto(Team homeTeam, Team awayTeam) {
         this.homeTeam = homeTeam;
@@ -25,5 +26,13 @@ public class RapportDto {
 
     public void setAwayTeam(Team awayTeam) {
         this.awayTeam = awayTeam;
+    }
+
+    public CombinedRapportDto getCombinedRapport() {
+        return combinedRapport;
+    }
+
+    public void setCombinedRapport(CombinedRapportDto combinedRapport) {
+        this.combinedRapport = combinedRapport;
     }
 }

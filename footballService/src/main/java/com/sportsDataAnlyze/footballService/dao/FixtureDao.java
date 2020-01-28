@@ -10,5 +10,5 @@ import java.util.List;
 
 @Repository
 public interface FixtureDao extends PagingAndSortingRepository<Fixture,Long>{
-    List<Fixture> findFixtureByHomeOrAway(Team home, Team away);
+    List<Fixture> findFixtureByHomeOrAwayOrderByFixtureDateDesc(Team home, Team away);
 }

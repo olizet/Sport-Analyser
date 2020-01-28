@@ -10,13 +10,7 @@ public class TeamRapportStats {
     private double goalsSide;
     private double goalsOppSide;
     private double goalsSideQuarter;
-    private double goalsSideOppSiderQuarter;
-    private double cardsQuarter;
-    private double cardsOppSideQuarter;
-    private double cardsSide;
-    private double cardsOppSide;
-    private double cardsSideQuarter;
-    private double cardsSideOppSideQuarter;
+    private double goalsSideOppSideQuarter;
     private double cornersQuarter;
     private double cornersOppSideQuarter;
     private double cornersSide;
@@ -65,60 +59,12 @@ public class TeamRapportStats {
         this.goalsSideQuarter = goalsSideQuarter;
     }
 
-    public double getGoalsSideOppSiderQuarter() {
-        return goalsSideOppSiderQuarter;
+    public double getGoalsSideOppSideQuarter() {
+        return goalsSideOppSideQuarter;
     }
 
-    public void setGoalsSideOppSiderQuarter(double goalsSideOppSiderQuarter) {
-        this.goalsSideOppSiderQuarter = goalsSideOppSiderQuarter;
-    }
-
-    public double getCardsQuarter() {
-        return cardsQuarter;
-    }
-
-    public void setCardsQuarter(double cardsQuarter) {
-        this.cardsQuarter = cardsQuarter;
-    }
-
-    public double getCardsOppSideQuarter() {
-        return cardsOppSideQuarter;
-    }
-
-    public void setCardsOppSideQuarter(double cardsOppSideQuarter) {
-        this.cardsOppSideQuarter = cardsOppSideQuarter;
-    }
-
-    public double getCardsSide() {
-        return cardsSide;
-    }
-
-    public void setCardsSide(double cardsSide) {
-        this.cardsSide = cardsSide;
-    }
-
-    public double getCardsOppSide() {
-        return cardsOppSide;
-    }
-
-    public void setCardsOppSide(double cardsOppSide) {
-        this.cardsOppSide = cardsOppSide;
-    }
-
-    public double getCardsSideQuarter() {
-        return cardsSideQuarter;
-    }
-
-    public void setCardsSideQuarter(double cardsSideQuarter) {
-        this.cardsSideQuarter = cardsSideQuarter;
-    }
-
-    public double getCardsSideOppSideQuarter() {
-        return cardsSideOppSideQuarter;
-    }
-
-    public void setCardsSideOppSideQuarter(double cardsSideOppSideQuarter) {
-        this.cardsSideOppSideQuarter = cardsSideOppSideQuarter;
+    public void setGoalsSideOppSideQuarter(double goalsSideOppSideQuarter) {
+        this.goalsSideOppSideQuarter = goalsSideOppSideQuarter;
     }
 
     public double getCornersQuarter() {

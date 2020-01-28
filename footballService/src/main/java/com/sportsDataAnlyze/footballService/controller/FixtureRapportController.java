@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.Optional;
 
 @Controller
-@RequestMapping("/football")
+@RequestMapping("/fixture-rapport")
 public class FixtureRapportController {
 
     @Autowired
@@ -21,9 +21,10 @@ public class FixtureRapportController {
     @Autowired
     FixtureService fixtureService;
 
-    @RequestMapping("/fixture")
+    @RequestMapping("")
     @ResponseBody
-    public Optional<RapportDto> getFixtureRapport(@RequestParam("home") String home, @RequestParam("away") String away) {
+    public RapportDto getFixtureRapport(@RequestParam("home") String home, @RequestParam("away") String away) {
         return fixtureService.generateFixtureRapport(home,away);
     }
+
 }

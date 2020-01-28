@@ -2,6 +2,7 @@ package com.sportsDataAnlyze.dataReplicator.service.task.app;
 
 import com.sportsDataAnlyze.dataReplicator.enums.SourceUrlEnum;
 import com.sportsDataAnlyze.dataReplicator.service.task.ReplicationTask;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;

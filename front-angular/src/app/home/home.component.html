@@ -1,0 +1,20 @@
+<div class="row">
+    <select id="leagueSelect" ngModel="league" (ngModelChange)="changeTeamList($event)" placeholder="choose league">
+        <option *ngFor="let league of leagues" [value]="league">
+            {{league}}
+        </option>
+    </select>
+    <form [formGroup]="fixtureForm" (ngSubmit)="getToRapport()">
+        <select class="teamSelect" formControlName="home">
+            <option *ngFor="let team of teams" [value]="team.teamName">
+                {{team.teamName}}
+            </option>
+        </select>
+        <select class="teamSelect" formControlName="away">
+            <option *ngFor="let team of teams" [value]="team.teamName">
+                {{team.teamName}}
+            </option>
+        </select>
+        <button class="btn btn-primary" type="submit">Generate!!!</button>
+    </form>
+</div>

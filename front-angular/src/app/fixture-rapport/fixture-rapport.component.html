@@ -1,0 +1,88 @@
+<table class="table" *ngIf="(fixtureRapport | json) != undefined">
+    <thead class="thead-dark">
+        <tr>
+            <th>Description</th>
+            <th>{{fixtureRapport.homeTeam.teamName}}</th>
+            <th>{{fixtureRapport.awayTeam.teamName}}</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Gole strzelone u siebie/na wyjeździe</td>
+            <td>{{fixtureRapport.homeTeam.teamRapportStats.goalsSide|number : '1.1-1'}}</td>
+            <td>{{fixtureRapport.awayTeam.teamRapportStats.goalsSide|number : '1.1-1'}}</td>
+        </tr>
+        <tr>
+            <td>Gole stracone u siebie/na wyjeździe</td>
+            <td>{{fixtureRapport.homeTeam.teamRapportStats.goalsOppSide|number : '1.1-1'}}</td>
+            <td>{{fixtureRapport.awayTeam.teamRapportStats.goalsOppSide|number : '1.1-1'}}</td>
+        </tr>
+        <tr>
+            <td>Gole strzelone przeciwko takim drużynom</td>
+            <td>{{fixtureRapport.homeTeam.teamRapportStats.goalsQuarter|number : '1.1-1'}}</td>
+            <td>{{fixtureRapport.awayTeam.teamRapportStats.goalsQuarter|number : '1.1-1'}}</td>
+        </tr>
+        <tr>
+            <td>Gole stracone przeciwko takim drużynom</td>
+            <td>{{fixtureRapport.homeTeam.teamRapportStats.goalsOppSideQuarter|number : '1.1-1'}}</td>
+            <td>{{fixtureRapport.awayTeam.teamRapportStats.goalsOppSideQuarter|number : '1.1-1'}}</td>
+        </tr>
+        <tr>
+            <td>Gole strzelone przeciwko takim drużynom u siebie/na wyjeździe</td>
+            <td>{{fixtureRapport.homeTeam.teamRapportStats.goalsSideQuarter |number : '1.1-1'|number : '1.1-1'}}</td>
+            <td>{{fixtureRapport.awayTeam.teamRapportStats.goalsSideQuarter|number : '1.1-1'}}</td>
+        </tr>
+        <tr>
+            <td>Gole stracone przeciwko takim drużynom u siebie/na wyjeździe</td>
+            <td>{{fixtureRapport.homeTeam.teamRapportStats.goalsSideOppSideQuarter|number : '1.1-1'}}</td>
+            <td>{{fixtureRapport.awayTeam.teamRapportStats.goalsSideOppSideQuarter|number : '1.1-1'}}</td>
+        </tr>
+        <tr><td></td></tr>
+        <tr>
+          <td>Prognoza goli u siebie/wyjazd</td>
+          <td>{{fixtureRapport.combinedRapport.avgGoalsSideHome|number : '1.1-1'}}</td>
+          <td>{{fixtureRapport.combinedRapport.avgGoalsSideAway|number : '1.1-1'}}</td>
+        </tr>
+        <tr>
+          <td>Prognoza goli przeciwko takim druzynom</td>
+          <td>{{fixtureRapport.combinedRapport.avgGoalsQuarteHome|number : '1.1-1'}}</td>
+          <td>{{fixtureRapport.combinedRapport.avgGoalsQuarteAway|number : '1.1-1'}}</td>
+        </tr>
+        <tr>
+          <td>Prognoza goli strona/przeciwko takim druzynom</td>
+          <td>{{fixtureRapport.combinedRapport.avgGoalsSideMatch|number : '1.1-1'}}</td>
+          <td>{{fixtureRapport.combinedRapport.avgGoalsQuarterMatch|number : '1.1-1'}}</td>
+        </tr>
+
+        <!-- <tr>
+            <td>Rożne u siebie/na wyjeździe</td>
+            <td>{{fixtureRapport.homeTeam.teamRapportStats.cornersSide|number : '1.1-1'}}</td>
+            <td>{{fixtureRapport.awayTeam.teamRapportStats.cornersSide|number : '1.1-1'}}</td>
+        </tr>
+        <tr>
+            <td>Rożne przeciwnika u siebie/na wyjeździe</td>
+            <td>{{fixtureRapport.homeTeam.teamRapportStats.cornersOppSide|number : '1.1-1'}}</td>
+            <td>{{fixtureRapport.awayTeam.teamRapportStats.cornersOppSide|number : '1.1-1'}}</td>
+        </tr>
+        <tr>
+            <td>Rożne otrzymane przeciwko takim drużynom</td>
+            <td>{{fixtureRapport.homeTeam.teamRapportStats.cornersQuarter|number : '1.1-1'}}</td>
+            <td>{{fixtureRapport.awayTeam.teamRapportStats.cornersQuarter|number : '1.1-1'}}</td>
+        </tr>
+        <tr>
+            <td>Rożne przeciwnika z takich drużyn</td>
+            <td>{{fixtureRapport.homeTeam.teamRapportStats.cornersOppSideQuarter|number : '1.1-1'}}</td>
+            <td>{{fixtureRapport.awayTeam.teamRapportStats.cornersOppSideQuarter|number : '1.1-1'}}</td>
+        </tr>
+        <tr>
+            <td>Rożne otrzymane przeciwko takim drużynom u siebie/na wyjeździe</td>
+            <td>{{fixtureRapport.homeTeam.teamRapportStats.cornersSideQuarter|number : '1.1-1'}}</td>
+            <td>{{fixtureRapport.awayTeam.teamRapportStats.cornersSideQuarter|number : '1.1-1'}}</td>
+        </tr>
+        <tr>
+            <td>Rożne przeciwnika z takich drużyn u siebie/na wyjeździe</td>
+            <td>{{fixtureRapport.homeTeam.teamRapportStats.cornersSideOppSideQuarter|number : '1.1-1'}}</td>
+            <td>{{fixtureRapport.awayTeam.teamRapportStats.cornersSideOppSideQuarter|number : '1.1-1'}}</td>
+        </tr> -->
+    </tbody>
+</table>
